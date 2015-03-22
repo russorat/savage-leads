@@ -1,7 +1,8 @@
 from elasticsearch import Elasticsearch
 import json
 import sys,time
-es = Elasticsearch()
+import config
+es = Elasticsearch(config.ES_HOSTS,verify_certs=config.ES_VERIFY_CERTS)
 
 if len(sys.argv) > 1 and sys.argv[1] == '--clear':
   es.indices.delete(index='leads', ignore=400)

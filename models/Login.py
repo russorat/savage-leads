@@ -1,9 +1,10 @@
 from elasticsearch import Elasticsearch
 import uuid
 import hashlib
+import config
 
 class Login(object):
-  es = Elasticsearch()
+  es = Elasticsearch(config.ES_HOSTS,verify_certs=config.ES_VERIFY_CERTS)
 
   def __init__(self,e=None,s=uuid.uuid4().hex,p=None):
     self._id = None

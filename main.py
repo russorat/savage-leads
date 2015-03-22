@@ -11,15 +11,12 @@ from models.User import User
 from models.Login import Login
 
 app = Flask(__name__)
-app.config.update(
-    DEBUG=True,
-    SECRET_KEY='this is a secret'
-)
+app.config.from_object('config')
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-# Note: We don't need to call run() since our application is embedded within
-# the App Engine WSGI application server.
+es = Elasticsearch(app.config['ES_HOSTS'])
 
 @app.before_request
 def before_request():
@@ -121,7 +118,6 @@ def page_not_found(e):
 
 
 def delete_lead(id):
-  es = Elasticsearch()
   return es.delete(
     index='leads',
     doc_type='leads',
@@ -129,7 +125,6 @@ def delete_lead(id):
   )
 
 def create_lead(data):
-  es = Elasticsearch()
   return es.create(
     index='leads',
     doc_type='leads',
@@ -137,7 +132,6 @@ def create_lead(data):
   )
 
 def get_es_leads():
-  es = Elasticsearch()
   return es.search(
     index='leads',
     doc_type='leads',

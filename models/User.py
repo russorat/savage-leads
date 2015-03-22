@@ -1,7 +1,8 @@
 from elasticsearch import Elasticsearch
+import config
 
 class User(object):
-  es = Elasticsearch()
+  es = Elasticsearch(config.ES_HOSTS,verify_certs=config.ES_VERIFY_CERTS)
 
   def __init__(self):
     self._id = None
