@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Leads | Savage Leads{% endblock %}
+{% block head %}
+  {{ super() }}
+  <script type="text/javascript" src="/static/tableExport.min.js"></script>
+  <script type="text/javascript" src="/static/libs/FileSaver/FileSaver.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <form method="POST" action="/leads/new">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Your Leads</h1>
+      <table id="leadsTable" class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th class="col-md-1">#</th>
+            {% for c in columns %}
+              <th>{{c|replace('_',' ')|title}}</th>
+            {% endfor %}
+            <th class="col-md-1">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+            <tr>
+              <td class="col-md-1">
+                {{loop.index}}
+              </td>
+              {% for c in columns %}
+                <td>{{row['_source'][c]|default('--',true)}}</td>
+              {% endfor %}
+              <td class="col-md-1 text-center">
+                <a class="btn btn-danger btn-xs" href="/leads/delete/{{row['_id']}}" aria-label="Delete">X</a>
+              </td>
+            </tr>
+          {% endfor %}
+          <tr id='hiddenRow' style="display:none;"><td>{{data|length+1}}</td>
+            {% for c in columns %}
+              <td><input type='text' name='{{c}}'></th>
+            {% endfor %}
+            <td class="col-md-1"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-8 col-md-4 text-right">
+      <button id="exportToCsv" type="button" class="btn btn-primary" onclick="$('#leadsTable').tableExport({type:'csv',escape:'false',ignoreColumn:[{{columns|length+1}}],fileName:'leads_export'});">Export CSV</button>
+      <button id="addNewBtn" type="button" class="btn btn-primary">Add New Lead</button>
+      <button id="submitLead" type="submit" class="btn btn-primary" style="display:none;">Save Lead</button>
+    </div>
+  </div>
+</form>
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="list-inline">
+        <li>
+          <a href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/main.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/static/main.js"></script>
+  {% endblock %}
+</head>
+<body>
+  <div class="container">
+    <div id="messages" class="row">
+      <div class="col-md-12">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+    <div id="content" class="row">
+      {% block content %}{% endblock %}
+    </div>
+    <div id="footer" class="row">
+      {% block footer %}
+        <div class="col-md-12">
+          <hr>
+          &copy; Copyright 2015 by <a href="http://www.savageautomation.com/">Savage Automation</a>.
+        </div>
+      {% endblock %}
+    </div>
+  </div>
+</body>
+</html>

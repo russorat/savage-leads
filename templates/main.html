@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Savage Leads - Lead Management Evolved{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <div class="col-md-12">
+    <h1>Savage Leads</h1>
+    <p>
+      <ul class="list-inline">
+        <li>
+          <a href="/register">Register</a>
+        </li>
+        |
+        <li>
+          <a href="/login">Login</a>
+        </li>
+        |
+        <li>
+          <a href="/leads">Leads</a>
+        </li>
+        |
+        <li>
+          <a href="/logout">Logout</a>
+        </li>
+      </ul>
+    </p>
+  </div>
+{% endblock %}

@@ -23,7 +23,12 @@ See the README file for directions. You'll need python 2.7 and [pip 1.4 or later
    cd savage-leads.git
    pip install -r requirements.txt -t lib
    ```
-4. Run this project locally from the command line:
+4. Run the Elasticsearch setup script to setup indicies
+   Note: running this with the --clear option will delete your indicies completely
+   ```
+   python setup_es.py
+   ```
+5. Run this project locally from the command line:
 
    ```
    dev_appserver.py .
