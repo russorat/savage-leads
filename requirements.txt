@@ -4,7 +4,10 @@
 # in `lib/` subdirectory.
 #
 # Note: The `lib` directory is added to `sys.path` by `appengine_config.py`.
-Flask>=0.10
 flask-login
 elasticsearch>=1.0.0,<2.0.0
 Flask-WTF
+certifi
+requests
+Flask==0.10.1
+logging

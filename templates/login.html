@@ -1,42 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Login | Savage Leads | SavageAutomation{% endblock %}
-{% block head %}
-  {{ super() }}
-  <script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js"></script>
-{% endblock %}
 {% block content %}
-<div class="col-md-offset-3 col-md-5 text-left">
-  <h2>Login</h2>
-  <form id="loginForm" action="" method="post" name="login">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        <label for="email" class="col-sm-3 control-label text-right">Email:</label>
-        <div class="col-sm-9">
-          {{ form.email(class_='form-control',placeholder_='Email') }}
-          {% for error in form.email.errors %}
-            <span style="color: red;">{{ error }}</span>
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-4 col-md-4 text-center">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          <p />
+          {% for message in messages %}
+            <p><mark>{{ message }}</mark></p>
           {% endfor %}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="password" class="col-sm-3 control-label text-right">Password:</label>
-        <div class="col-sm-9">
-          {{ form.password(class_='form-control',placeholder_='Password') }}
-          {% for error in form.password.errors %}
-            <span style="color: red;">{{ error }}</span>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-          {{ form.remember_me }} Remember Me
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-1 col-sm-11">
-          <button type="submit" class="btn btn-default">Sign in</button>
-        </div>
-      </div>
-  </form>
+        {% endif %}
+      {% endwith %}
+      <h2>
+        <a href="{{link}}" role="button">
+          <img src="/static/images/google-signin-long/Red-signin-Long-base-44dp.png" style="max-width:70%" class="google-button"/>
+        </a>
+      </h2>
+    </div>
+  </div>
 </div>
 {% endblock %}

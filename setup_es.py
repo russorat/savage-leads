@@ -2,7 +2,9 @@ from elasticsearch import Elasticsearch
 import json
 import sys,time
 import config
-es = Elasticsearch(config.ES_HOSTS,verify_certs=config.ES_VERIFY_CERTS)
+
+es = Elasticsearch(hosts=config.ES_HOSTS)
+print es
 
 if len(sys.argv) > 1 and sys.argv[1] == '--clear':
   es.indices.delete(index='leads', ignore=400)
@@ -12,9 +14,10 @@ if len(sys.argv) > 1 and sys.argv[1] == '--clear':
 
 
 #Create each index
-es.indices.create(index='leads', ignore=400)
-es.indices.create(index='logins', ignore=400)
-es.indices.create(index='users', ignore=400)
+#es.indices.create(index='leads', ignore=400)
+#es.indices.create(index='logins', ignore=400)
+#es.indices.create(index='users', ignore=400)
+#es.indices.create(index='content', ignore=400)
 
 #apply mappings if needed
 mapping = """{
@@ -50,6 +53,28 @@ mapping = """{
           "match": "*"
         }
       }],
+      "properties": {
+        "video_duration" : {
+          "type" : "long"
+        },
+        "video_height" : {
+          "type" : "long"
+        },
+        "video_width" : {
+          "type" : "long"
+        },
+        "num_plays" : {
+          "type" : "long"
+        },
+        "date_added" : {
+          "format" : "dateOptionalTime",
+          "type" : "date"
+        },
+        "date_recorded" : {
+          "format" : "dateOptionalTime",
+          "type" : "date"
+        }
+      },
       "_all": {
         "enabled": true
       }
@@ -60,14 +85,19 @@ json_mapping = json.loads(mapping)
 #Apply leads Mapping
 json_mapping['template'] = 'leads*'
 leads_mapping = json.dumps(json_mapping)
-es.indices.put_template(name='leads',body=leads_mapping)
+#es.indices.put_template(name='leads',body=leads_mapping)
 
 #apply users mapping
 json_mapping['template'] = 'users*'
 users_mapping = json.dumps(json_mapping)
-es.indices.put_template(name='users',body=users_mapping)
+#es.indices.put_template(name='users',body=users_mapping)
 
 #apply logins mapping
 json_mapping['template'] = 'logins*'
 logins_mapping = json.dumps(json_mapping)
-es.indices.put_template(name='logins',body=logins_mapping)
+#es.indices.put_template(name='logins',body=logins_mapping)
+
+#apply logins mapping
+json_mapping['template'] = 'content*'
+content_mapping = json.dumps(json_mapping)
+es.indices.put_template(name='content',body=content_mapping)
